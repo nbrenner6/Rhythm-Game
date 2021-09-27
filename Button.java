@@ -85,4 +85,7 @@ private Color color, regularColor, highlightColor, textColor;
    public Rectangle getBounds() {
       return null;
    }
+   
+   public void testHELLOGITHUB() {
+   }
 }
