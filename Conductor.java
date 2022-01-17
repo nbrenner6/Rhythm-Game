@@ -13,15 +13,15 @@ public class Conductor {
    private int songPosSec;
    private int songPosBeat;
    
-   public Conductor(int b, int s, int pos1, int pos2) {
-      bpm = b;
+   public Conductor(int s, int pos1, int pos2) {
+      updateBPM();
       spb = s;
       songPosSec = pos1;
       songPosBeat = pos2;
    }
    
-   public void Start() {
-      String path = "C:\\Users\\1497008\\Downloads\\twinkle-twinkle-little-star.mid";
+   public void updateBPM() {
+      String path = "C:\\Users\\nicky\\Downloads\\twinkle-twinkle-little-star.mid";
       File twinkle = new File(path);
       try {
          Sequencer sequencer = MidiSystem.getSequencer(); // Get the default Sequencer
@@ -29,12 +29,57 @@ public class Conductor {
          Sequence sequence = MidiSystem.getSequence(twinkle);
          sequencer.setSequence(sequence); // load it into sequencer
          //sequencer.start();  // start the playback
+         /*
          int res = sequence.getResolution();
+         System.out.println(res);
+         double test = Math.pow(res * 1000 * 60, -1);
+         System.out.println(test);
+         */
+         int test = 0;
+         Track[] tracks = sequence.getTracks();
+         for (int i = 0; i < tracks[0].size(); i++) {
+            MidiEvent event = tracks[0].get(i);
+            MidiMessage message = event.getMessage();
+            if (message instanceof MetaMessage) {
+                MetaMessage mm = (MetaMessage) message;
+                if(mm.getType()==0x51) {
+                    mm.getData();
+                    byte[] data = mm.getData();
+                    int tempo = (data[0] & 0xff) << 16 | (data[1] & 0xff) << 8 | (data[2] & 0xff);
+                    test = 60000000 / tempo; //bpm of the piece
+                    //System.out.println(test);
+                }
+            }
+         }
+         setBPM(test);
+         
       }
       catch (MidiUnavailableException | InvalidMidiDataException | IOException ex) {
          ex.printStackTrace();
       }
-      //music source
+   }
+
+   public void setBPM(int b) {
+      bpm = b;
+   }
+
+   public int getBPM() {
+      return bpm;
+   }
+
+   public void playTrack() {
+      String path = "C:\\Users\\nicky\\Downloads\\twinkle-twinkle-little-star.mid";
+      File twinkle = new File(path);
+      try {
+         Sequencer sequencer = MidiSystem.getSequencer(); // Get the default Sequencer
+         sequencer.open();
+         Sequence sequence = MidiSystem.getSequence(twinkle);
+         sequencer.setSequence(sequence); // load it into sequencer
+         sequencer.start();  // start the playback       
+      }
+      catch (MidiUnavailableException | InvalidMidiDataException | IOException ex) {
+         ex.printStackTrace();
+      }
    }
    
 }

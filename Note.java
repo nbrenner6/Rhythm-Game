@@ -1,4 +1,4 @@
-public class Note{
+/*public class Note{
    private String direction;
    private double time;
    private x;
@@ -30,3 +30,5 @@ public class Note{
    
    
 }
+
+*/
