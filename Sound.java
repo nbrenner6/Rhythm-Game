@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import javax.sound.midi.*;
 
 public class Sound

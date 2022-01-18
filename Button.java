@@ -8,9 +8,9 @@ import java.awt.Rectangle;
 
 public class Button implements Shape 
 {
-private Shape shape; 
-private String title; 
-private Color color, regularColor, highlightColor, textColor; 
+private Shape shape;
+private String title;
+private Color color, regularColor, highlightColor, textColor;
    
    public Button(Shape s, String t, Color rc, Color hc, Color tc)
    {

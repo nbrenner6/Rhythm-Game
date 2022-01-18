@@ -1,5 +1,6 @@
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JFrame;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.Graphics;
@@ -7,10 +8,12 @@ import java.awt.event.MouseEvent;
 import java.awt.Rectangle;
 import java.awt.Color;
 import java.awt.geom.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.Timer;
 
 
-public class Menu extends JPanel implements MouseListener, MouseMotionListener
+public class Menu extends JPanel implements MouseListener, MouseMotionListener, ActionListener
 {
    private static final int SIZE = 500;
    private static final int textSize = 25;
@@ -107,6 +110,14 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
    }
    
    public void mouseDragged(MouseEvent e) {
+   }
+   
+   public void actionPerformed(ActionEvent e) {
+   
+   }
+   
+   public static void main(String args[]){
+      Menu test = new Menu();
    }
     
 }
