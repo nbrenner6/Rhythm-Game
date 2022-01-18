@@ -22,7 +22,7 @@ private Color color, regularColor, highlightColor, textColor;
       color = regularColor;
    }
    
-   public void highlight() {
+   public void highlight() { 
       color = highlightColor;  
    }
    
@@ -42,7 +42,7 @@ private Color color, regularColor, highlightColor, textColor;
       return textColor;
    }
    
-   public String getTitle() {
+   public String getTitle() { 
       return title;
    }
    
