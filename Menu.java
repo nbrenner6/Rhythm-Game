@@ -15,6 +15,10 @@ import java.util.Timer;
 
 public class Menu extends JPanel implements MouseListener, MouseMotionListener, ActionListener
 {
+   public static final int noteSpeed = 3;
+   public static final int reachTime = 3;
+   public static final int sleepTime = 6;
+
    private static final int SIZE = 500;
    private static final int textSize = 25;
    private static final int DELAY = 0;
@@ -23,6 +27,8 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
    private Button [] buttons = new Button[2];
    protected static int mouseX;
    protected static int mouseY;
+   
+   public static Game game;
 
    public Menu()
    {
