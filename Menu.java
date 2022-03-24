@@ -1,6 +1,7 @@
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
+import javax.swing.ImageIcon;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.Graphics;
@@ -20,6 +21,8 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
    public static final int sleepTime = 6;
 
    private static final int SIZE = 500;
+   private static final int screenWidth = 500;
+   private static final int screenHeight = 500;
    private static final int textSize = 25;
    private static final int DELAY = 0;
    private static Timer t;
@@ -27,6 +30,9 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
    private Button [] buttons = new Button[2];
    protected static int mouseX;
    protected static int mouseY;
+   private Image screenImage;
+   private Image background = new ImageIcon(Menu.class.getResource("../images/background.jpg")).getImage();
+   private Graphics screenGraphic;
    
    public static Game game;
 
@@ -87,6 +93,20 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
                      
        }      
        repaint();
+   }
+   
+   public void screenDraw(Graphics2D g)
+   {
+      g.drawImage(background, 0, 0, null);
+      
+   }
+   
+   public void paint(Graphics g)
+   {
+      screenImage = createImage(screenWidth, screenHeight);
+      screenGraphic = screenImage.getGraphics();
+      screenDraw((Graphics2D) screenGraphic);
+      g.drawImage(screenImage, 0, 0, null);
    }
    
    public void mouseMoved( MouseEvent e)
