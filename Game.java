@@ -7,6 +7,7 @@ public class Game
 {
    private String gameTitle;
    ArrayList<Note> notes = new ArrayList<Note>();
+   private Image notePath = new ImageIcon(Menu.class.getResource("../images/notePath.png")).getImage();
    
    private Image accuracyImage;
    private int score = 0;
@@ -92,6 +93,14 @@ public class Game
          combo = 0;
          score += 10;
       }
+   }
+   
+   public void screenDraw(Graphics2D g)
+   {
+      g.drawImage(notePath, 200, 20, null);
+      g.drawImage(notePath, 250, 20, null);
+      g.drawImage(notePath, 300, 20, null);
+      g.drawImage(notePath, 350, 20, null);
    }
    
 
