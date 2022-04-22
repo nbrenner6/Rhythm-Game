@@ -3,24 +3,44 @@ import java.awt.Graphics2D;
 import javax.swing.ImageIcon;
 
 public class Note extends Thread{
-   private String direction;
+   private String letter;
    private double time;
-   private int x = 250 - (1000/Menu.sleepTime*Menu.noteSpeed)*Menu.reachTime;
+   private int x;
    private int y = 250 - (1000/Menu.sleepTime*Menu.noteSpeed)*Menu.reachTime;;
-   private Image arrowImage = new ImageIcon(Menu.class.getResource("../images/downarrow.png")).getImage();
+   private Image arrowImage = new ImageIcon(Menu.class.getResource("images/downarrow.png")).getImage();
    
    
-   public Note(String d, int t){
-      direction = d;
+   public Note(String l, int t){
+      letter = l;
       time = t;
+      
+      if(letter.equals("A"))
+      {
+         x = 200;
+      }
+      
+      if(letter.equals("W"))
+      {
+         x = 250;
+      }
+      
+      if(letter.equals("S"))
+      {
+         x = 300;
+      }
+      
+      if(letter.equals("D"))
+      {
+         x = 350;
+      }
    }
    
-   public String getDirection(){
-      return direction;
+   public String getLetter(){
+      return letter;
    }
    
-   public void setDirection(String d){
-      direction = d;
+   public void setLetter(String l){
+      letter = l;
    }
    
    public double getTime(){
@@ -72,4 +92,5 @@ public class Note extends Thread{
    
    
 }
+
 
