@@ -7,7 +7,7 @@ public class Game
 {
    private String gameTitle;
    ArrayList<Note> notes = new ArrayList<Note>();
-   private Image notePath = new ImageIcon(Menu.class.getResource("../images/notePath.png")).getImage();
+   private Image notePath = new ImageIcon(Menu.class.getResource("images/notePath.png")).getImage();
    
    private Image accuracyImage;
    private int score = 0;
