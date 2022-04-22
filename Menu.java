@@ -31,7 +31,7 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
    protected static int mouseX;
    protected static int mouseY;
    private Image screenImage;
-   private Image background = new ImageIcon(Menu.class.getResource("../images/background.jpg")).getImage();
+   private Image background = new ImageIcon(Menu.class.getResource("images/background.jpg")).getImage();
    private Graphics screenGraphic;
    
    public static Game game;
