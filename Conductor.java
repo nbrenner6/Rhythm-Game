@@ -12,21 +12,23 @@ public class Conductor {
    private int spb;
    private int songPosSec;
    private int songPosBeat;
+   private String name;
    
-   public Conductor(int s, int pos1, int pos2) {
+   public Conductor(int s, int pos1, int pos2, String n) {
       updateBPM();
       spb = s;
       songPosSec = pos1;
       songPosBeat = pos2;
+      name = n;
    }
    
    public void updateBPM() {
-      String path = "C:\\Users\\nicky\\Downloads\\twinkle-twinkle-little-star.mid";
-      File twinkle = new File(path);
+      String path = "C:\\Users\\1496668\\Downloads\\" + name + ".mid";
+      File song = new File(path);
       try {
          Sequencer sequencer = MidiSystem.getSequencer(); // Get the default Sequencer
          sequencer.open();
-         Sequence sequence = MidiSystem.getSequence(twinkle);
+         Sequence sequence = MidiSystem.getSequence(song);   
          sequencer.setSequence(sequence); // load it into sequencer
          //sequencer.start();  // start the playback
          /*
@@ -66,10 +68,18 @@ public class Conductor {
    public int getBPM() {
       return bpm;
    }
+   
+   public String getName()
+   {
+      return name;
+   }
 
    public void playTrack() {
-      String path = "C:\\Users\\nicky\\Downloads\\twinkle-twinkle-little-star.mid";
+
+      String path = "C:\\Users\\1496668\\Downloads\\" + name + ".mid";
+
       File twinkle = new File(path);
+      
       try {
          Sequencer sequencer = MidiSystem.getSequencer(); // Get the default Sequencer
          sequencer.open();
@@ -78,8 +88,10 @@ public class Conductor {
          sequencer.start();  // start the playback       
       }
       catch (MidiUnavailableException | InvalidMidiDataException | IOException ex) {
-         ex.printStackTrace();
+            ex.printStackTrace();
       }
+     
+     
    }
    
 }
