@@ -169,6 +169,10 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
    
    public static void main(String args[]){
       Menu test = new Menu();
+      JFrame MainFrame = new JFrame();
+      MainFrame.setSize(600, 400);
+      MainFrame.add(test);
+      MainFrame.setVisible(true);
    }
     
 }
