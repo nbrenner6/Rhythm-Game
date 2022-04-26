@@ -27,21 +27,21 @@ public class BasicGraphics extends JPanel {
     }
 
     public void paint(Graphics g) {
-        setSize(600,400);
+        setSize(1600,1400);
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0, 600, 400);
+        g.fillRect(0, 0, 1600, 1200);
         g.setColor(Color.RED);
-        g.drawLine(0, 300, 600, 300);
+        g.drawLine(0, 1000, 1600, 1000);
         g.setColor(Color.BLUE);
         int initial= 100;
-        int increment = 10;
-        g.drawLine(200, initial + (increment * num), 400, initial + (increment * num));
+        int increment = 50;
+        g.drawLine(200, initial + (increment * num), 1400, initial + (increment * num));
     }
     
     public static void main(String [] args) {
         JFrame MainFrame = new JFrame();
         MainFrame.setSize(600,400);
-        Conductor test = new Conductor(1, 1, 1);
+        Conductor test = new Conductor(1, 1, 1, "twinkle");
         BasicGraphics g = new BasicGraphics(test);
         MainFrame.add(g);
         test.playTrack();
