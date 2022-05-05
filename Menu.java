@@ -93,6 +93,9 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
       {
          g.setColor(Color.black);
          g.fillRect(0, 0, SIZEX, SIZEY);
+         g.setColor(Color.white);
+         g.setFont(new Font("Serif", Font.PLAIN, 100));
+         g.drawString("TRACK SELECT", 425, 200);
       }
       else if(gameMode == MAINGAME)
       {
