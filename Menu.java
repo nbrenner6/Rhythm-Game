@@ -30,6 +30,8 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
    private static Timer t;
    private static int frame;  
    private Button [] startButtons = new Button[3];
+   private Button [] trackButtons = new Button[1];
+   private Button [] mainButtons = new Button[4];
    protected static int mouseX;
    protected static int mouseY;
    private Image screenImage;
@@ -37,7 +39,7 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
    private Graphics screenGraphic;
    
    public static Game game;
-   public static final int STARTSCREEN = 0, TRACKSELECT = 1, MAINGAME = 2;
+   public static final int STARTSCREEN = 0, TRACKSELECT = 1, MAINGAME = 2, INSTRUCTIONS = 3;
    public static int gameMode; 
 
    public Menu()
@@ -47,12 +49,14 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
       addMouseMotionListener( this );
       mouseX = SIZE/2;
       mouseY = SIZE/2;
-      Rectangle r1 = new Rectangle(700,550,75, 50);
-      startButtons[0] = new Button(r1, "reset", Color.CYAN, Color.YELLOW, Color.BLACK);
+      Rectangle r1 = new Rectangle(700,550,150, 50);
+      startButtons[0] = new Button(r1, "how to play", Color.CYAN, Color.YELLOW, Color.BLACK);
       Ellipse2D.Float r2 = new Ellipse2D.Float(700, 700,75, 50);
       startButtons[1] = new Button(r2, "quit", Color.CYAN, Color.YELLOW, Color.BLACK);
       Rectangle r3 = new Rectangle(700, 400, 75, 50);
       startButtons[2] = new Button(r3, "start", Color.CYAN, Color.YELLOW, Color.BLACK);
+      Rectangle t1 = new Rectangle(700, 550, 150, 50);
+      trackButtons[0] = new Button(t1, "twinkle", Color.CYAN, Color.YELLOW, Color.BLACK);
       //Sound.initialize();
 //       t = new Timer(DELAY, new Listener());
 //       t.start();
@@ -96,10 +100,38 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
          g.setColor(Color.white);
          g.setFont(new Font("Serif", Font.PLAIN, 100));
          g.drawString("TRACK SELECT", 425, 200);
+         int x = textSize;
+         int y = textSize;
+         
+         for(Button b: trackButtons)
+         {
+            g.setFont(new Font("Serif", Font.PLAIN, textSize));
+            x = (int)(b.getShape().getBounds().getX());
+            y = (int)(b.getShape().getBounds().getY());
+            int width = (int)(b.getShape().getBounds().getWidth());            
+            int height = (int)(b.getShape().getBounds().getHeight());
+            g.setColor(b.getColor());                
+            if(b.getShape() instanceof Rectangle)                       
+               g.fillRect(x, y, width, height);            
+            else
+               g.fillOval(x, y, width, height);            
+               g.setColor(b.getTextColor());                        
+               g.drawString(b.getTitle(), x, y+(height/2));    
+         }
       }
       else if(gameMode == MAINGAME)
       {
-      
+         g.setColor(Color.black);
+         g.fillRect(0, 0, SIZEX, SIZEY);
+         
+      }
+      else if(gameMode == INSTRUCTIONS)
+      {
+         g.setColor(Color.black);
+         g.fillRect(0, 0, SIZEX, SIZEY);
+         g.setColor(Color.white);
+         g.setFont(new Font("Serif", Font.PLAIN, 75));
+         g.drawString("HOW TO PLAY", 425, 200);
       }
    }
    
@@ -115,8 +147,8 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
                 if(b.getTitle().equals("quit")) {             
                    System.exit(0);  
                 }             
-                else if(b.getTitle().equals("reset")) {              
-                  //resetEnemies();
+                else if(b.getTitle().equals("how to play")) {              
+                  gameMode = INSTRUCTIONS;
                 } 
                 else if(b.getTitle().equals("start"))
                 {
@@ -124,6 +156,18 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
                 }      
              }
           }
+          
+          for(Button b: trackButtons)
+          {
+            if(b.getShape().contains(mouseX, mouseY))
+            {
+               if(b.getTitle().equals("twinkle"))
+               {
+                  gameMode = MAINGAME;
+               }
+            }
+          } 
+         
        }       
        else if(button == MouseEvent.BUTTON3)      
        { 
