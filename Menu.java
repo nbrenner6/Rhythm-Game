@@ -139,34 +139,39 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
    {      
        int button = e.getButton();      
        if(button == MouseEvent.BUTTON1)      
-       {         
-          for(Button b: startButtons)         
-          {           
-             if(b.getShape().contains(mouseX, mouseY))           
-             {              
-                if(b.getTitle().equals("quit")) {             
-                   System.exit(0);  
-                }             
-                else if(b.getTitle().equals("how to play")) {              
-                  gameMode = INSTRUCTIONS;
-                } 
-                else if(b.getTitle().equals("start"))
-                {
-                  gameMode = TRACKSELECT;
-                }      
+       {
+         if(gameMode == STARTSCREEN)
+         {  
+             for(Button b: startButtons)         
+             {           
+                if(b.getShape().contains(mouseX, mouseY))           
+                {              
+                   if(b.getTitle().equals("quit")) {             
+                      System.exit(0);  
+                   }             
+                   else if(b.getTitle().equals("how to play")) {              
+                     gameMode = INSTRUCTIONS;
+                   } 
+                   else if(b.getTitle().equals("start"))
+                   {
+                     gameMode = TRACKSELECT;
+                   }      
+                }
              }
-          }
-          
-          for(Button b: trackButtons)
-          {
-            if(b.getShape().contains(mouseX, mouseY))
-            {
-               if(b.getTitle().equals("twinkle"))
+         }
+         if(gameMode == TRACKSELECT)
+         {
+             for(Button b: trackButtons)
+             {
+               if(b.getShape().contains(mouseX, mouseY))
                {
-                  gameMode = MAINGAME;
+                  if(b.getTitle().equals("twinkle"))
+                  {
+                     gameMode = MAINGAME;
+                  }
                }
-            }
-          } 
+             } 
+         }
          
        }       
        else if(button == MouseEvent.BUTTON3)      
@@ -233,9 +238,13 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
          {
             gameMode = TRACKSELECT;
          }
-         else if(gameMode == TRACKSELECT && (e.getSource() == startButtons[1]))
+         else if(gameMode == TRACKSELECT && (e.getSource() == trackButtons[0]))
          {
             gameMode = MAINGAME;
+         }
+         else if(gameMode == STARTSCREEN && (e.getSource() == startButtons[0]))
+         {
+            gameMode = INSTRUCTIONS;
          }
       }
    } 
