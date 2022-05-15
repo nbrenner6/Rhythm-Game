@@ -21,8 +21,8 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
    public static final int sleepTime = 6;
 
    private static final int SIZE = 500;
-   private static final int SIZEX = 1584;
-   private static final int SIZEY = 1061;
+   private static final int SIZEX = 1100;
+   private static final int SIZEY = 1100;
    private static final int screenWidth = 500;
    private static final int screenHeight = 500;
    private static final int textSize = 25;
@@ -49,13 +49,13 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
       addMouseMotionListener( this );
       mouseX = SIZE/2;
       mouseY = SIZE/2;
-      Rectangle r1 = new Rectangle(700,550,150, 50);
+      Rectangle r1 = new Rectangle(450,550,150, 50);
       startButtons[0] = new Button(r1, "how to play", Color.CYAN, Color.YELLOW, Color.BLACK);
-      Ellipse2D.Float r2 = new Ellipse2D.Float(700, 700,75, 50);
+      Ellipse2D.Float r2 = new Ellipse2D.Float(450, 700,75, 50);
       startButtons[1] = new Button(r2, "quit", Color.CYAN, Color.YELLOW, Color.BLACK);
-      Rectangle r3 = new Rectangle(700, 400, 75, 50);
+      Rectangle r3 = new Rectangle(450, 400, 75, 50);
       startButtons[2] = new Button(r3, "start", Color.CYAN, Color.YELLOW, Color.BLACK);
-      Rectangle t1 = new Rectangle(700, 550, 150, 50);
+      Rectangle t1 = new Rectangle(450, 550, 150, 50);
       trackButtons[0] = new Button(t1, "twinkle", Color.CYAN, Color.YELLOW, Color.BLACK);
       //Sound.initialize();
 //       t = new Timer(DELAY, new Listener());
@@ -72,9 +72,9 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
          int x = textSize;
          int y = textSize;
          g.setColor(Color.white);
-         g.setFont(new Font("Serif", Font.PLAIN, 200));
-         g.drawString("RHYTHM", 425, 200);
-         g.drawString("GAME", 365, 400);
+         g.setFont(new Font("Serif", Font.PLAIN, 100));
+         g.drawString("RHYTHM", 325, 200);
+         g.drawString("GAME", 365, 350);
          
       
          for(Button b: startButtons)
@@ -99,7 +99,7 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
          g.fillRect(0, 0, SIZEX, SIZEY);
          g.setColor(Color.white);
          g.setFont(new Font("Serif", Font.PLAIN, 100));
-         g.drawString("TRACK SELECT", 425, 200);
+         g.drawString("TRACK SELECT", 200, 100);
          int x = textSize;
          int y = textSize;
          
@@ -123,6 +123,13 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
       {
          g.setColor(Color.black);
          g.fillRect(0, 0, SIZEX, SIZEY);
+         g.setColor(Color.white);
+         g.drawLine(SIZEX/4-50, 0, SIZEX/4-50, SIZEY);
+         g.drawLine(SIZEX/4+115, 0, SIZEX/4+115, SIZEY);
+         g.drawLine((SIZEX/4)*2, 0, (SIZEX/4)*2, SIZEY);
+         g.drawLine((SIZEX/4)*3-115, 0, (SIZEX/4)*3-115, SIZEY);
+         g.drawLine((SIZEX/4)*3+50, 0, (SIZEX/4)*3+50, SIZEY);
+         g.drawLine(SIZEX/4-50, 900, (SIZEX/4)*3+50, 900);
          
       }
       else if(gameMode == INSTRUCTIONS)
@@ -131,7 +138,7 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
          g.fillRect(0, 0, SIZEX, SIZEY);
          g.setColor(Color.white);
          g.setFont(new Font("Serif", Font.PLAIN, 75));
-         g.drawString("HOW TO PLAY", 425, 200);
+         g.drawString("HOW TO PLAY", 425, 80);
       }
    }
    
