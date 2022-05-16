@@ -22,6 +22,8 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
    public static final int sleepTime = 6;
 
    private static final int SIZE = 500;
+//    private static final int screenWidth = 500;
+//    private static final int screenHeight = 500;
    private static final int SIZEX = 1100;
    private static final int SIZEY = 1100;
    private static final int screenWidth = 500;
@@ -36,7 +38,7 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
    protected static int mouseX;
    protected static int mouseY;
    private Image screenImage;
-   private Image background = new ImageIcon(Menu.class.getResource("images/background.jpg")).getImage();
+//    private Image background = new ImageIcon(Menu.class.getResource("images/background.jpg")).getImage();
    private Graphics screenGraphic;
    ArrayList<Track> trackList = new ArrayList<Track>();
    
@@ -52,6 +54,7 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
       mouseX = SIZE/2;
       mouseY = SIZE/2;
       Rectangle r1 = new Rectangle(450,550,150, 50);
+      startButtons[0] = new Button(r1, "how to play", Color.CYAN, Color.YELLOW, Color.BLACK);
       startButtons[0] = new Button(r1, "how to play", Color.CYAN, Color.YELLOW, Color.BLACK);
       Ellipse2D.Float r2 = new Ellipse2D.Float(450, 700,75, 50);
       startButtons[1] = new Button(r2, "quit", Color.CYAN, Color.YELLOW, Color.BLACK);
@@ -70,7 +73,7 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
    public void showBoard(Graphics g)
    {
       if(gameMode == STARTSCREEN)
-      { 
+      {
          g.setColor(Color.black);
          g.fillRect(0, 0, SIZEX, SIZEY);
          int x = textSize;
@@ -103,6 +106,7 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
          g.fillRect(0, 0, SIZEX, SIZEY);
          g.setColor(Color.white);
          g.setFont(new Font("Serif", Font.PLAIN, 100));
+         g.drawString("TRACK SELECT", 425, 200);
          g.drawString("TRACK SELECT", 200, 100);
          int x = textSize;
          int y = textSize;
@@ -137,7 +141,6 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
          g.setFont(new Font("Serif", Font.PLAIN, 40));
          g.drawString("SCORE: ", 25, 100);
          g.drawString("HEALTH: ", 900, 100);
-         
       }
       else if(gameMode == INSTRUCTIONS)
       {
@@ -145,7 +148,13 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
          g.fillRect(0, 0, SIZEX, SIZEY);
          g.setColor(Color.white);
          g.setFont(new Font("Serif", Font.PLAIN, 75));
-         g.drawString("HOW TO PLAY", 425, 80);
+         g.drawString("HOW TO PLAY", 300, 80);
+         g.setFont(new Font("Serif", Font.PLAIN, 25));
+         g.drawString("Notes will fall down the screen", 200, 300);
+         g.drawString("The letters W, S, A, and D correspond to up, down, left, and right respectively", 200, 375);
+         g.drawString("Your job is to hit the corresponding keys as close as possible", 200, 450);
+         g.drawString("to the instant the notes fall into the frame of the arrows at the bottom", 200, 500);
+         //g.drawString("HOW TO PLAY", 425, 80);
       }
    }
    
@@ -153,9 +162,27 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
    {      
        int button = e.getButton();      
        if(button == MouseEvent.BUTTON1)      
-       {
-         if(gameMode == STARTSCREEN)
-         {  
+       {         
+          for(Button b: startButtons)         
+          {           
+             if(b.getShape().contains(mouseX, mouseY))           
+             {              
+                if(b.getTitle().equals("quit")) {             
+                   System.exit(0);  
+                }             
+                else if(b.getTitle().equals("how to play")) {              
+                  gameMode = INSTRUCTIONS;
+                } 
+                else if(b.getTitle().equals("start"))
+                {
+                  gameMode = TRACKSELECT;
+                }      
+             }
+          }
+          
+      }
+      if(gameMode == STARTSCREEN)
+      {  
              for(Button b: startButtons)         
              {           
                 if(b.getShape().contains(mouseX, mouseY))           
@@ -185,9 +212,7 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
                   }
                }
              } 
-         }
-         
-       }       
+         }    
        else if(button == MouseEvent.BUTTON3)      
        { 
                        
