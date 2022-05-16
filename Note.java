@@ -7,6 +7,7 @@ public class Note extends Thread{
    private int x;
    private int y = 250 - (1000/Menu.sleepTime*Menu.noteSpeed)*Menu.reachTime;;
    private Image arrowImage = new ImageIcon(Menu.class.getResource("images/downarrow.png")).getImage();
+   private boolean moving = true;
    
    
    public Note(String l){
@@ -39,6 +40,45 @@ public class Note extends Thread{
    
    public void setLetter(String l){
       letter = l;
+   }
+   
+   public void close()
+   {
+      moving = false;
+   }
+   
+   public void moveNote()
+   {
+      y += Menu.noteSpeed;
+      if(y>900)
+      {
+         System.out.println("Miss");
+         close();
+      }
+   }
+   
+   public void run()
+   {
+      try
+      {
+         while(true)
+         {
+            moveNote();
+            if(moving)
+            {
+               Thread.sleep(Menu.sleepTime);
+            }
+            else
+            {
+               interrupt();
+               break;
+            }
+         }
+      }
+      catch(Exception e)
+      {
+         System.err.println(e.getMessage());
+      }
    }
    
    public void screenDraw(Graphics2D g)
