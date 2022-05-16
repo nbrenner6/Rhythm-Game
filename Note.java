@@ -4,15 +4,13 @@ import javax.swing.ImageIcon;
 
 public class Note extends Thread{
    private String letter;
-   private double time;
    private int x;
    private int y = 250 - (1000/Menu.sleepTime*Menu.noteSpeed)*Menu.reachTime;;
    private Image arrowImage = new ImageIcon(Menu.class.getResource("images/downarrow.png")).getImage();
    
    
-   public Note(String l, int t){
+   public Note(String l){
       letter = l;
-      time = t;
       
       if(letter.equals("A"))
       {
@@ -43,15 +41,7 @@ public class Note extends Thread{
       letter = l;
    }
    
-   public double getTime(){
-      return time;
-   }
-   
-   public void setTime(double t){
-      time = t;  
-   }
-   
-   public void createNote(Graphics2D g)
+   public void screenDraw(Graphics2D g)
    {
       g.drawImage(arrowImage, x, y, null);
    }
