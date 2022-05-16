@@ -12,6 +12,7 @@ import java.awt.geom.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Timer;
+import java.util.ArrayList;
 
 
 public class Menu extends JPanel implements MouseListener, MouseMotionListener
@@ -37,6 +38,7 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
    private Image screenImage;
    private Image background = new ImageIcon(Menu.class.getResource("images/background.jpg")).getImage();
    private Graphics screenGraphic;
+   ArrayList<Track> trackList = new ArrayList<Track>();
    
    public static Game game;
    public static final int STARTSCREEN = 0, TRACKSELECT = 1, MAINGAME = 2, INSTRUCTIONS = 3;
@@ -61,6 +63,8 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
 //       t = new Timer(DELAY, new Listener());
 //       t.start();
 //       frame = 0;
+
+      trackList.add(new Track("twinkle.png", "twinkle.mid"));
    }
    
    public void showBoard(Graphics g)
@@ -130,6 +134,9 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
          g.drawLine((SIZEX/4)*3-115, 0, (SIZEX/4)*3-115, SIZEY);
          g.drawLine((SIZEX/4)*3+50, 0, (SIZEX/4)*3+50, SIZEY);
          g.drawLine(SIZEX/4-50, 900, (SIZEX/4)*3+50, 900);
+         g.setFont(new Font("Serif", Font.PLAIN, 40));
+         g.drawString("SCORE: ", 25, 100);
+         g.drawString("HEALTH: ", 900, 100);
          
       }
       else if(gameMode == INSTRUCTIONS)
@@ -218,6 +225,18 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener
             b.highlight();
          else
             b.unHighlight();
+      }
+      
+      for(Button b: trackButtons)
+      {
+         if(b.getShape().contains(mouseX, mouseY))
+         {
+            b.highlight();
+         }
+         else
+         {
+            b.unHighlight();
+         }
       }
       repaint();
    }
