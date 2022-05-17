@@ -1,4 +1,5 @@
 import java.awt.Graphics2D;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
@@ -6,67 +7,65 @@ import javax.swing.ImageIcon;
 public class Game extends Thread
 {
    private String gameTitle;
-   private Music musicTitle;
+   private String musicTitle;
+   private Music gameMusic;
    ArrayList<Note> notes = new ArrayList<Note>();
    //private Image notePath = new ImageIcon(Menu.class.getResource("images/notePath.png")).getImage();
-   private Image noteImageW = new ImageIcon(Menu.class.getResource("images/notePath.png")).getImage();
-   private Image noteImageA = new ImageIcon(Menu.class.getResource("images/notePath.png")).getImage();
-   private Image noteImageS = new ImageIcon(Menu.class.getResource("images/notePath.png")).getImage();
-   private Image noteImageD = new ImageIcon(Menu.class.getResource("images/notePath.png")).getImage();
+   private Image noteImageW = new ImageIcon(Menu.class.getResource("images/noteRoute.png")).getImage();
+   private Image noteImageA = new ImageIcon(Menu.class.getResource("images/noteRoute.png")).getImage();
+   private Image noteImageS = new ImageIcon(Menu.class.getResource("images/noteRoute.png")).getImage();
+   private Image noteImageD = new ImageIcon(Menu.class.getResource("images/noteRoute.png")).getImage();
    
    private Image accuracyImage;
    private int score = 0;
    private int combo = 0;
 
 
-   public Game(String t, Music m)
+   public Game(String t, String m)
    {
       gameTitle = t;
       musicTitle = m;
+      gameMusic = new Music(musicTitle, false);
    }
    
    public void pressW()
    {
       accuracyCheck("W");
-      noteImageW = new ImageIcon(Menu.class.getResource("images/notePressed.png")).getImage();
    }
    
    public void releaseW()
    {
-      noteImageW = new ImageIcon(Menu.class.getResource("images/notePath.png")).getImage();
+
    }
    
    public void pressA()
    {
       accuracyCheck("A");
-      noteImageA = new ImageIcon(Menu.class.getResource("images/notePressed.png")).getImage();
    }
    
    public void releaseA()
    {
-      noteImageA = new ImageIcon(Menu.class.getResource("images/notePath.png")).getImage();
+
    }
    
    public void pressS()
    {
       accuracyCheck("S");
-      noteImageS = new ImageIcon(Menu.class.getResource("images/notePressed.png")).getImage();
    }
    
    public void releaseS()
    {
-      noteImageS = new ImageIcon(Menu.class.getResource("images/notePath.png")).getImage();
+;
    }
    
    public void pressD()
    {
       accuracyCheck("D");
-      noteImageD = new ImageIcon(Menu.class.getResource("images/notePressed.png")).getImage();
    }
    
    public void releaseD()
    {
-      noteImageD = new ImageIcon(Menu.class.getResource("images/notePath.png")).getImage();
+
    }
    
    public void noteFall()
@@ -92,12 +91,12 @@ public class Game extends Thread
       }
       
       int i = 0;
-      musicTitle.start();
+      gameMusic.start();
       
       while(i<beats.size() && !isInterrupted())
       {
          boolean falling = false;
-         if(beats.get(i).getTime() <= musicTitle.getTime())
+         if(beats.get(i).getTime() <= gameMusic.getTime())
          {
             Note n = new Note(beats.get(i).getName());
             n.start();
@@ -139,7 +138,7 @@ public class Game extends Thread
    
    public void close()
    {
-      musicTitle.close();
+      gameMusic.close();
       this.interrupt();
    }
    
@@ -168,12 +167,32 @@ public class Game extends Thread
       }
    }
    
-   public void screenDraw(Graphics2D g)
+   public void screenDraw(Graphics g)
    {
-      g.drawImage(noteImageW, 200, 20, null);
+     /* g.drawImage(noteImageW, 200, 20, null);
       g.drawImage(noteImageA, 250, 20, null);
       g.drawImage(noteImageS, 300, 20, null);
-      g.drawImage(noteImageD, 350, 20, null); 
+      g.drawImage(noteImageD, 350, 20, null); */
+      
+      for(int i = 0; i<notes.size(); i++)
+      {
+         Note n = notes.get(i);
+         
+         if(n.getY() > 900)
+         {
+            accuracyImage = new ImageIcon(Menu.class.getResource("images/miss.png")).getImage();
+         }
+         
+         if(!n.isMoving())
+         {
+            notes.remove(i);
+            i--;
+         }
+         else
+         {
+            n.screenDraw(g);
+         }
+      }
    }
    
 
