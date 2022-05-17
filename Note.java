@@ -1,5 +1,7 @@
 import java.awt.Image;
 import java.awt.Graphics2D;
+import java.awt.Graphics;
+import java.awt.Color;
 import javax.swing.ImageIcon;
 
 public class Note extends Thread{
@@ -15,12 +17,12 @@ public class Note extends Thread{
       
       if(letter.equals("A"))
       {
-         x = 200;
+         x = 390;
       }
       
       if(letter.equals("W"))
       {
-         x = 250;
+         x = 225;
       }
       
       if(letter.equals("S"))
@@ -40,6 +42,16 @@ public class Note extends Thread{
    
    public void setLetter(String l){
       letter = l;
+   }
+   
+   public boolean isMoving()
+   {
+      return moving;
+   }
+   
+   public int getY()
+   {
+      return y;
    }
    
    public void close()
@@ -81,9 +93,11 @@ public class Note extends Thread{
       }
    }
    
-   public void screenDraw(Graphics2D g)
+   public void screenDraw(Graphics g)
    {
-      g.drawImage(arrowImage, x, y, null);
+      //g.drawImage(arrowImage, x, y, null);
+      g.setColor(Color.green);
+      g.drawRect(x, y, 165, 20);
    }
    
    public String noteTiming()
