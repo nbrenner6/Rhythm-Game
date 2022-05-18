@@ -8,4 +8,14 @@ public class Track
       title = t;
       music = m;
    }
+   
+   public String getTitle()
+   {
+      return title;
+   }
+   
+   public String getMusic()
+   {
+      return music;
+   }
 }
