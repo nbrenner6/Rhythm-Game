@@ -74,7 +74,7 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
       trackButtons[0] = new Button(t1, "twinkle", Color.CYAN, Color.YELLOW, Color.BLACK);
       score = 0;
       health = 100;
-
+      Sound.initialize();
       t = new Timer(DELAY, new Listener());
       t.start();
      //  frame = 0;
@@ -85,7 +85,7 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
    
    public void showBoard(Graphics g)
    {
-      if(gameMode == STARTSCREEN)
+      if(gameMode == STARTSCREEN)   //graphics for start screen 
       {
          g.setColor(Color.black);
          g.fillRect(0, 0, SIZEX, SIZEY);
@@ -155,7 +155,9 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
          g.setColor(Color.white);
          g.setFont(new Font("Serif", Font.PLAIN, 40));
          g.drawString("SCORE: ", 25, 100);
+         g.drawString("" + score, 100, 200);
          g.drawString("HEALTH: ", 900, 100);
+         g.drawString("" + health, 950, 200);
          g.setFont(new Font("Serif", Font.PLAIN, 60));
          g.drawString("W", SIZEX/4+10, 1000);
          g.drawString("A", SIZEX/4+175, 1000);
@@ -268,6 +270,11 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
       g.drawImage(screenImage, 0, 0, null);
    }*/
    
+   public void updateScore()
+   {
+      score = game.getScore();
+   }
+   
    public void startGame(int s)
    {
       isMain = false;
@@ -291,11 +298,6 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
       }
       
    }
-   
-  /* public String intToKey(int k)
-   {
-      return "";  
-   }*/
    
    public void mouseMoved( MouseEvent e)
    {
@@ -345,11 +347,26 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
    
    public void keyPressed(KeyEvent e)
    {
+     /* if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+      {
+         System.exit(1);
+      }
+      pressedKeys.add(e.getKeyCode());*/
+      
       if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
       {
          System.exit(1);
       }
-      pressedKeys.add(e.getKeyCode());
+      
+      if(!pressedKeys.contains(e.getKeyCode()))
+      {
+         pressedKeys.add(e.getKeyCode());
+         if(e.getKeyCode() == KeyEvent.VK_W)
+         {
+            Sound.click();
+            Sound.silence();
+         }
+      }
       
    }
    
