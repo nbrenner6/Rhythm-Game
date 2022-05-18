@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import javax.sound.midi.*;
 
 public class Sound
@@ -6,8 +5,7 @@ public class Sound
    protected static MidiChannel[] channels = null;
    protected static Instrument[] instr;
    protected static final int PIANO = 0;
-   protected static final int VIOLIN = 41;
-   protected static final int CELLO = 43;
+   protected static final int TIMPANI = 48;;
    
    public static void initialize()
    {
@@ -27,5 +25,21 @@ public class Sound
    public static void silence()
    {
       channels[0].allNotesOff();
+   }
+   
+   public static void tap()
+   {
+      channels[0].programChange(instr[38].getPatch().getProgram());
+      int pitch = 50;
+      int velocity = 30;
+      channels[0].noteOn(pitch, velocity);
+   }
+   
+   public static void click()
+   {
+      channels[0].programChange(instr[120].getPatch().getProgram());
+      int pitch = 50;
+      int velocity = 30;
+      channels[0].noteOn(pitch, velocity);
    }
 }
