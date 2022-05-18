@@ -41,6 +41,7 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
    private Button [] startButtons = new Button[3];
    private Button [] trackButtons = new Button[1];
    private Button [] mainButtons = new Button[4];
+   private Button [] deathButtons = new Button[1];
    protected static int mouseX;
    protected static int mouseY;
    private Image screenImage;
@@ -50,7 +51,7 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
    ArrayList<Track> trackList = new ArrayList<Track>();
    
    public static Game game;
-   public static final int STARTSCREEN = 0, TRACKSELECT = 1, MAINGAME = 2, INSTRUCTIONS = 3;
+   public static final int STARTSCREEN = 0, TRACKSELECT = 1, MAINGAME = 2, INSTRUCTIONS = 3, DEATHSCREEN = 4;
    public static int gameMode; 
    public static int score; 
    public static int health;
@@ -72,6 +73,9 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
       startButtons[2] = new Button(r3, "start", Color.CYAN, Color.YELLOW, Color.BLACK);
       Rectangle t1 = new Rectangle(450, 550, 150, 50);
       trackButtons[0] = new Button(t1, "twinkle", Color.CYAN, Color.YELLOW, Color.BLACK);
+      Rectangle d1 = new Rectangle(450, 550, 150, 50);
+      deathButtons[0] = new Button(d1, "Start Over", Color.RED, Color.YELLOW, Color.BLACK);
+
       score = 0;
       health = 100;
       Sound.initialize();
@@ -203,6 +207,27 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
          g.drawString("to the instant the notes fall into the frame of the arrows at the bottom", 200, 500);
          //g.drawString("HOW TO PLAY", 425, 80);
       }
+      else if (gameMode == DEATHSCREEN) {
+         int x = textSize;
+         int y = textSize;
+         g.setColor(Color.black);
+         g.fillRect(0, 0, SIZEX, SIZEY);
+         g.setColor(Color.white);
+         g.setFont(new Font("Serif", Font.PLAIN, 75));
+         g.drawString("YOU DIED", 300, 80);
+         for(Button b: deathButtons)
+         {
+            g.setFont(new Font("Serif", Font.PLAIN, textSize));
+            x = (int)(b.getShape().getBounds().getX());
+            y = (int)(b.getShape().getBounds().getY());
+            int width = (int)(b.getShape().getBounds().getWidth());            
+            int height = (int)(b.getShape().getBounds().getHeight());
+            g.setColor(b.getColor());                
+            if(b.getShape() instanceof Rectangle)                       
+               g.fillRect(x, y, width, height);
+         }
+
+      }
    }
    
    public void mouseClicked( MouseEvent e )
@@ -272,7 +297,7 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
    
    public void updateScore()
    {
-      score = game.getScore();
+      //score = game.getScore();
    }
    
    public void startGame(int s)
@@ -361,10 +386,10 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
       if(!pressedKeys.contains(e.getKeyCode()))
       {
          pressedKeys.add(e.getKeyCode());
-         if(e.getKeyCode() == KeyEvent.VK_W)
+         if(e.getKeyCode() == KeyEvent.VK_W || e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_D)
          {
-            Sound.click();
-            Sound.silence();
+            Sound.tap();
+  
          }
       }
       
@@ -373,6 +398,7 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
    public void keyReleased(KeyEvent e)
    {
       pressedKeys.remove((Integer)e.getKeyCode());
+      Sound.silence();
    }
    
    private class Listener implements ActionListener
