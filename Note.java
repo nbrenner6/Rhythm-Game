@@ -27,12 +27,12 @@ public class Note extends Thread{
       
       if(letter.equals("S"))
       {
-         x = 300;
+         x = 555;
       }
       
       if(letter.equals("D"))
       {
-         x = 350;
+         x = 720;
       }
    }
    
@@ -62,7 +62,7 @@ public class Note extends Thread{
    public void moveNote()
    {
       y += Menu.noteSpeed;
-      if(y>900)
+      if(y > 935)
       {
          System.out.println("Miss");
          close();
@@ -98,33 +98,42 @@ public class Note extends Thread{
       //g.drawImage(arrowImage, x, y, null);
       g.setColor(Color.green);
       g.drawRect(x, y, 165, 20);
+      g.fillRect(x, y, 165, 20);
    }
    
    public String noteTiming()
    {
-      if(y <= 200)
+   
+      if(y < 875)
       {
          System.out.println("Too Early");
+         close();
          return "Too Early";
       }
-      else if(y <= 225)
+      else if(875 <= y && y < 895)
       {
          System.out.println("Good");
+//         System.out.println("Good, y="+y);
+         close();
          return "Good";
       }
-      else if(y <= 275)
+      else if(895 <= y && y <= 910)
       {
          System.out.println("Perfect");
+//         System.out.println("Perfect, y="+y);
+         close();
          return "Perfect";
       }
-      else if(y <= 325)
+      else if(y > 910 || y <= 935)
       {
          System.out.println("Good");
+         close();
          return "Good";
       }
-      else if(y <= 375)
+      else if(y > 935)
       {
          System.out.println("Too Late");
+         close(); 
          return "Too Late";
       }
       else
