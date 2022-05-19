@@ -10,11 +10,6 @@ public class Game extends Thread
    private String musicTitle;
    private Music gameMusic;
    ArrayList<Note> notes = new ArrayList<Note>();
-   //private Image notePath = new ImageIcon(Menu.class.getResource("images/notePath.png")).getImage();
-   private Image noteImageW = new ImageIcon(Menu.class.getResource("images/noteRoute.png")).getImage();
-   private Image noteImageA = new ImageIcon(Menu.class.getResource("images/noteRoute.png")).getImage();
-   private Image noteImageS = new ImageIcon(Menu.class.getResource("images/noteRoute.png")).getImage();
-   private Image noteImageD = new ImageIcon(Menu.class.getResource("images/noteRoute.png")).getImage();
    
    private Image accuracyImage;
    private int score = 0;
@@ -26,6 +21,16 @@ public class Game extends Thread
       gameTitle = t;
       musicTitle = m;
       gameMusic = new Music(musicTitle, false);
+   }
+   
+   public int getScore()
+   {
+      return score;
+   }
+   
+   public int getCombo()
+   {
+      return combo;
    }
    
    public void pressW()
@@ -55,7 +60,7 @@ public class Game extends Thread
    
    public void releaseS()
    {
-;
+
    }
    
    public void pressD()
@@ -74,7 +79,8 @@ public class Game extends Thread
       
       if(gameTitle.equals("twinkle"))
       {
-         int startTime = 7500 - Menu.reachTime*1000;
+         //int startTime = 7500 - Menu.reachTime*1000;
+         int startTime = 0;
          int gapTime = 120;
          beats = new ArrayList<Beat>();
          beats.add(new Beat(startTime, "W"));
@@ -148,7 +154,7 @@ public class Game extends Thread
       {
          combo = 0;
          score += 10;
-         accuracyImage = new ImageIcon(Menu.class.getResource("../images/early.png")).getImage();
+        // accuracyImage = new ImageIcon(Menu.class.getResource("../images/early.png")).getImage();
       }
       else if(p.equals("Good"))
       {
@@ -165,14 +171,12 @@ public class Game extends Thread
          combo = 0;
          score += 10;
       }
+      
+      //System.out.println("score = "+score);
    }
    
    public void screenDraw(Graphics g)
    {
-     /* g.drawImage(noteImageW, 200, 20, null);
-      g.drawImage(noteImageA, 250, 20, null);
-      g.drawImage(noteImageS, 300, 20, null);
-      g.drawImage(noteImageD, 350, 20, null); */
       
       for(int i = 0; i<notes.size(); i++)
       {
