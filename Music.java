@@ -41,11 +41,12 @@ public class Music extends Thread
    {
       loop = false;
       player.close();
-      this.interrupt();
+      interrupt();
    }
    
    public void run()
    {
+      loop = true;
       try
       {
          while(loop)
