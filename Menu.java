@@ -16,14 +16,17 @@ import java.awt.geom.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.Timer;
+import javax.swing.JLabel;
 import java.util.ArrayList;
 import java.util.HashSet;
 
 
 public class Menu extends JPanel implements MouseListener, MouseMotionListener, KeyListener
+//public class Menu extends JPanel implements MouseListener, MouseMotionListener
 {
-   public static final int noteSpeed = 3;
-   public static final int reachTime = 3;
+   public static final int noteSpeed = 1;
+//   public static final int noteSpeed = 3;
+   public static final int reachTime = 2;
    public static final int sleepTime = 6;
 
    private static final int SIZE = 500;
@@ -38,6 +41,9 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
    private static Timer t;
    private static HashSet<Integer> pressedKeys;
    private static int frame;  
+   
+
+   
    private Button [] startButtons = new Button[3];
    private Button [] trackButtons = new Button[1];
    private Button [] mainButtons = new Button[4];
@@ -76,15 +82,22 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
       Rectangle d1 = new Rectangle(450, 550, 150, 50);
       deathButtons[0] = new Button(d1, "Start Over", Color.RED, Color.YELLOW, Color.BLACK);
 
+
+
       score = 0;
       health = 100;
+      
+      /////////////////////////////////////////////////////
+
+      
+      ////////////////////////////////////////////////////
+      
       Sound.initialize();
       t = new Timer(DELAY, new Listener());
       t.start();
      //  frame = 0;
 
-      trackList.add(new Track("twinkle", "twinkle.mp3"));
-      startGame(0);
+      trackList.add(new Track("twinkle", "twinkle2.mp3"));
    }
    
    public void showBoard(Graphics g)
@@ -148,14 +161,13 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
          g.setColor(Color.black);
          g.fillRect(0, 0, SIZEX, SIZEY);
          g.setColor(Color.blue);
-         g.fillRect(SIZEX/4-50, 895, 650, 5);
+         g.fillRect(SIZEX/4-50, 895, 660, 20);
          g.setColor(Color.white);
          g.drawLine(SIZEX/4-50, 0, SIZEX/4-50, SIZEY);
          g.drawLine(SIZEX/4+115, 0, SIZEX/4+115, SIZEY);
-         g.drawLine((SIZEX/4)*2, 0, (SIZEX/4)*2, SIZEY);
-         g.drawLine((SIZEX/4)*3-115, 0, (SIZEX/4)*3-115, SIZEY);
-         g.drawLine((SIZEX/4)*3+50, 0, (SIZEX/4)*3+50, SIZEY);
-         //g.drawLine(SIZEX/4-50, 900, (SIZEX/4)*3+50, 900);
+         g.drawLine((SIZEX/4)*2+5, 0, (SIZEX/4)*2+5, SIZEY);
+         g.drawLine((SIZEX/4)*3-105, 0, (SIZEX/4)*3-105, SIZEY);
+         g.drawLine((SIZEX/4)*3+60, 0, (SIZEX/4)*3+60, SIZEY);
          g.setColor(Color.white);
          g.setFont(new Font("Serif", Font.PLAIN, 40));
          g.drawString("SCORE: ", 25, 100);
@@ -170,24 +182,26 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
          Color c = new Color(152, 152, 0, 75);
          g.setColor(c);
          
+         //score = game.getScore();
+         //System.out.println("update score to " + score);
 
          for(int key: pressedKeys)
          {
             if(key == KeyEvent.VK_W)
             {
-               g.fillRect(SIZEX/4-50, 0, 165, 900);
+               g.fillRect(SIZEX/4-50, 0, 165, 915);
             }
             if(key == KeyEvent.VK_A)
             {
-               g.fillRect(SIZEX/4+115, 0, 160, 900);
+               g.fillRect(SIZEX/4+115, 0, 165, 915);
             }
             if(key == KeyEvent.VK_S)
             {
-               g.fillRect((SIZEX/4)*2, 0, 160, 900);
+               g.fillRect((SIZEX/4)*2+5, 0, 165, 915);
             }
             if(key == KeyEvent.VK_D)
             {
-               g.fillRect((SIZEX/4)*3-115, 0, 165, 900);
+               g.fillRect((SIZEX/4)*3-105, 0, 165, 900);
             }
          }
          
@@ -231,7 +245,8 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
    }
    
    public void mouseClicked( MouseEvent e )
-   {      
+   {   
+       Sound.click();
        int button = e.getButton();      
        if(button == MouseEvent.BUTTON1)      
        {         
@@ -263,7 +278,8 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
                   if(b.getTitle().equals("twinkle"))
                   {
                      gameMode = MAINGAME;
-                     startMain();
+                     //startMain();
+                     startGame(0);
                   }
                }
              } 
@@ -297,12 +313,12 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
    
    public void updateScore()
    {
-      //score = game.getScore();
+      score = game.getScore();
    }
    
    public void startGame(int s)
    {
-      isMain = false;
+      isMain = true;
       game = new Game(trackList.get(s).getTitle(), trackList.get(s).getMusic());
       game.start();
    }
@@ -357,9 +373,12 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
    }
    
    public void mouseReleased(MouseEvent e) {
+   
+      Sound.silence();
    }
    
    public void mousePressed(MouseEvent e) {
+   
    }
    
    public void mouseDragged(MouseEvent e) {
@@ -393,12 +412,59 @@ public class Menu extends JPanel implements MouseListener, MouseMotionListener, 
          }
       }
       
+      // ////////////
+      if(e.getKeyCode() == KeyEvent.VK_W)
+      {
+         Menu.game.pressW();
+      }
+      
+      if(e.getKeyCode() == KeyEvent.VK_A)
+      {
+         Menu.game.pressA();
+      }
+      
+      if(e.getKeyCode() == KeyEvent.VK_S)
+      {
+         Menu.game.pressS();
+      }
+      
+      if(e.getKeyCode() == KeyEvent.VK_D)
+      {
+         Menu.game.pressD();
+      }
+      
+      //update score
+      updateScore();
+      
    }
    
    public void keyReleased(KeyEvent e)
    {
       pressedKeys.remove((Integer)e.getKeyCode());
       Sound.silence();
+      
+      if(e.getKeyCode() == KeyEvent.VK_W)
+      {
+         Menu.game.releaseW();
+      }
+      
+      if(e.getKeyCode() == KeyEvent.VK_A)
+      {
+         Menu.game.releaseA();
+      }
+      
+      if(e.getKeyCode() == KeyEvent.VK_S)
+      {
+         Menu.game.releaseS();
+      }
+      
+      if(e.getKeyCode() == KeyEvent.VK_D)
+      {
+         Menu.game.releaseD();
+      }
+
+      
+      
    }
    
    private class Listener implements ActionListener
